@@ -1,0 +1,24 @@
+{
+  "name": "skytips",
+  "version": "1.0.0",
+  "description": "Hover preview for Skyweaver cards",
+  "scripts": {
+    "test": "eslint src && echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nikki Gaudreau",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.15.4",
+    "css-loader": "^6.2.0",
+    "eslint": "^7.32.0",
+    "eslint-config-semistandard": "^16.0.0",
+    "eslint-config-standard": "^16.0.3",
+    "semistandard": "^16.0.1",
+    "style-loader": "^3.2.1",
+    "webpack": "^5.52.1",
+    "webpack-cli": "^4.8.0"
+  },
+  "dependencies": {
+    "tippy.js": "^6.3.1"
+  }
+}

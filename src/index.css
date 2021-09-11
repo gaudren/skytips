@@ -1,0 +1,15 @@
+.skytips {
+  text-decoration: underline dotted;
+  white-space: nowrap;
+}
+
+.tippy-box {
+  background-color: #0c061e;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #705bab;
+}
+
+.tippy-arrow {
+  color: #705bab;
+}
