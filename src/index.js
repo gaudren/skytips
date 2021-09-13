@@ -1,13 +1,37 @@
 import { delegate } from 'tippy.js';
 import 'tippy.js/dist/tippy.css';
 import './index.css';
-import cards from './carddb.json';
 
 async function fetchCardDatabase() {
-  return cards;
+  const init = {
+    method: 'POST',
+    body: JSON.stringify({
+      page: {
+        page: 1,
+        pageSize: 1000
+      }
+    }),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+
+  const response = await fetch('https://api.skyweaver.net/rpc/SkyWeaverAPI/GetCardLibrary', init);
+  const db = await response.json();
+  const cards = db.cards;
+  const output = {};
+
+  for (const card of cards) {
+    const cardSlug = card.name.replace(/[^a-zA-Z]/g, '-').toLowerCase();
+    const cardId = card.id;
+
+    output[cardSlug] = cardId;
+  }
+
+  return output;
 }
 
-function autolink() {
+function autolink() { // Looks for {{Card Name}} and replaces it with a <span>
   const found = document.evaluate('.//text()[contains(., "{{")][contains(., "}}")]', document.body, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
 
   const re = /({{[^{}]+}})/g;
@@ -29,7 +53,7 @@ function autolink() {
 }
 
 function onLoaded(cardDatabase, options) {
-  delegate('body', {
+  delegate('body', { // Watches for changes on the page and applies tippy
     target: '*[data-skytips-card], .skytips',
     placement: 'bottom',
     content: (reference) => {
@@ -37,13 +61,12 @@ function onLoaded(cardDatabase, options) {
         return;
       }
 
-      let cardName = reference.dataset.skytipsCard;
+      let cardName = reference.dataset.skytipsCard; // Supports <span data-skytips-card="Card Name">
       if (!cardName) {
-        cardName = reference.innerText.trim();
+        cardName = reference.innerText.trim(); // Supports <span class="skytips">Card Name</span>
       }
 
-      const cardSlug = cardName.replace(/[^a-zA-Z]/g, '-').toLowerCase();
-      console.log(cardSlug);
+      const cardSlug = cardName.replace(/[^a-zA-Z]/g, '-').toLowerCase(); // Replaces special characters from card names with dashes
 
       const img = document.createElement('img');
       img.style.width = '250px';
