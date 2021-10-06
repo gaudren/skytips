@@ -1,4 +1,4 @@
-import { delegate } from 'tippy.js';
+import { delegate, followCursor } from 'tippy.js';
 import 'tippy.js/dist/tippy.css';
 import './index.css';
 
@@ -55,7 +55,10 @@ function autolink() { // Looks for {{Card Name}} and replaces it with a <span>
 function onLoaded(cardDatabase, options) {
   delegate('body', { // Watches for changes on the page and applies tippy
     target: '*[data-skytips-card], .skytips',
-    placement: 'bottom',
+    placement: 'auto-start',
+    followCursor: true,
+    plugins: [followCursor],
+    arrow: false,
     content: (reference) => {
       if (reference.tagName.toLowerCase() === 'body') {
         return;
@@ -69,8 +72,7 @@ function onLoaded(cardDatabase, options) {
       const cardSlug = cardName.replace(/[^a-zA-Z]/g, '-').toLowerCase(); // Replaces special characters from card names with dashes
 
       const img = document.createElement('img');
-      img.style.width = '250px';
-      img.style.marginRight = '10px';
+      img.className = 'cardPopup';
       img.src = `https://assets.skyweaver.net/latest/full-cards/6x/${cardDatabase[cardSlug]}.png`;
       img.alt = cardName;
 
