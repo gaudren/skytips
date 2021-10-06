@@ -1,6 +1,7 @@
 # skytips
 
-![Screenshot from 2021-09-11 16-54-55](https://user-images.githubusercontent.com/87712502/132961743-e8e9e05b-2079-47cf-b069-d3b84f193e75.png)
+
+![Screenshot from 2021-10-06 17-19-16](https://user-images.githubusercontent.com/87712502/136285513-0108ba03-727e-41bc-8f6b-ee2092a6952c.png)
 
 [live demo](https://gaudren.github.io/skytips/dist/index.html)
 
